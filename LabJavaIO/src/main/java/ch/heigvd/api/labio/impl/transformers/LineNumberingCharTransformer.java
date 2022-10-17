@@ -18,10 +18,27 @@ import java.util.logging.Logger;
  */
 public class LineNumberingCharTransformer {
   private static final Logger LOG = Logger.getLogger(LineNumberingCharTransformer.class.getName());
+  private int lineNumber = 0;
+  private boolean isFirstChar = true;
 
   public String transform(String c) {
-    /* TODO: implement the transformation here.
-     */
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    if (isFirstChar) {
+      isFirstChar = false;
+      if (c.equals("\n")) {
+        return ++lineNumber + ". \n" + ++lineNumber + ". ";
+      } else {
+        return ++lineNumber + ". " + c;
+      }
+    }
+
+    switch (c) {
+      case "\n":
+        c = "\n" + ++lineNumber + ". ";
+        break;
+      case "\r":
+        c = "";
+        break;
+    }
+    return c;
   }
 }
